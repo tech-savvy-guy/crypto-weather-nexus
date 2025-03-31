@@ -17,10 +17,10 @@ export default function CryptoDashboard() {
   useEffect(() => {
     dispatch(fetchCryptoData())
 
-    // Refresh data every 60 seconds
+    // Refresh data every 5 minutes
     const interval = setInterval(() => {
       dispatch(fetchCryptoData())
-    }, 60000)
+    }, 300000)
 
     return () => clearInterval(interval)
   }, [dispatch])
