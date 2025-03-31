@@ -141,6 +141,7 @@
   max-width: 420px;
   position: relative;
   animation: slideIn 0.2s ease-out forwards;
+  font-family: var(--font-sans);
 }
 
 @keyframes slideIn {
@@ -195,12 +196,14 @@
   font-weight: 600;
   font-size: 14px;
   margin-bottom: 4px;
+  font-family: inherit;
 }
 
 .custom-toast-message {
   font-size: 13px;
   color: hsl(var(--muted-foreground));
   line-height: 1.4;
+  font-family: inherit;
 }
 
 .custom-toast-close {
@@ -239,5 +242,22 @@
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
+  font-family: var(--font-sans);
+}
+
+[data-sonner-toaster] [data-sonner-toast] * {
+  font-family: inherit;
+}
+
+[data-sonner-toaster] {
+  font-family: var(--font-sans);
+}
+
+[data-sonner-toaster] * {
+  font-family: inherit;
+}
+
+.custom-toast-wrapper {
+  font-family: var(--font-sans);
 }
 

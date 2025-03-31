@@ -119,16 +119,17 @@ function CryptoCard({ crypto, isFavorite, onToggleFavorite }: CryptoCardProps) {
 
   // Get crypto icon
   const getCryptoIcon = (id: string) => {
-    switch (id.toLowerCase()) {
-      case "bitcoin":
-        return "₿"
-      case "ethereum":
-        return "Ξ"
-      case "cardano":
-        return "₳"
-      default:
-        return "🪙"
-    }
+    return (
+      <img
+        src={`/${id.toLowerCase()}.png`}
+        alt={`${crypto.name} icon`}
+        className="w-8 h-8 rounded-full"
+        onError={(e) => {
+          // Fallback to a default icon if the image fails to load
+          e.currentTarget.src = "/default.png"
+        }}
+      />
+    )
   }
 
   return (
@@ -137,7 +138,7 @@ function CryptoCard({ crypto, isFavorite, onToggleFavorite }: CryptoCardProps) {
         <div className="p-6 space-y-4">
           <div className="flex justify-between items-start">
             <div className="flex items-center">
-              <span className="text-2xl mr-2 font-mono">{getCryptoIcon(crypto.id)}</span>
+              <div className="mr-2">{getCryptoIcon(crypto.id)}</div>
               <div>
                 <h3 className="text-xl font-semibold">{crypto.name}</h3>
                 <p className="text-sm text-muted-foreground">{crypto.symbol}</p>
@@ -158,10 +159,14 @@ function CryptoCard({ crypto, isFavorite, onToggleFavorite }: CryptoCardProps) {
               ${crypto.price.toLocaleString(undefined, { maximumFractionDigits: 2 })}
             </span>
             <div
-              className={`flex items-center gap-1 px-3 py-1 rounded-full ${isPositiveChange ? "bg-success/10 text-success" : "bg-destructive/10 text-destructive"}`}
+              className={`flex items-center gap-1 px-3 py-1 rounded-full font-medium ${
+                isPositiveChange
+                  ? "bg-success/20 text-success-foreground border border-success/30"
+                  : "bg-destructive/20 text-destructive-foreground border border-destructive/30"
+              }`}
             >
               {isPositiveChange ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />}
-              <span className="font-medium">{Math.abs(crypto.change24h).toFixed(2)}%</span>
+              <span className="font-bold">{Math.abs(crypto.change24h).toFixed(2)}%</span>
             </div>
           </div>
 

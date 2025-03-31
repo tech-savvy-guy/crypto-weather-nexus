@@ -16,7 +16,6 @@ const fontSans = FontSans({
 export const metadata: Metadata = {
   title: "CryptoWeather Nexus",
   description: "Dashboard combining weather data, cryptocurrency information, and real-time notifications",
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({
@@ -27,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <ReduxProvider>
             <div className="relative min-h-screen flex flex-col">
               <Header />
@@ -39,10 +38,11 @@ export default function RootLayout({
               richColors
               closeButton
               theme="system"
+              className="font-sans"
               toastOptions={{
                 duration: 5000,
                 classNames: {
-                  toast: "sonner-toast-custom",
+                  toast: "sonner-toast-custom font-sans",
                   title: "sonner-title-custom",
                   description: "sonner-description-custom",
                   actionButton: "sonner-action-button",
@@ -58,6 +58,3 @@ export default function RootLayout({
   )
 }
 
-
-
-import './globals.css'

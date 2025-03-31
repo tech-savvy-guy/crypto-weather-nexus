@@ -8,6 +8,13 @@ import { setupWebSocket } from "@/lib/websocket"
 import { AlertTriangle, TrendingUp, X } from "lucide-react"
 import { toast } from "sonner"
 import type { WeatherData } from "@/lib/types"
+import { Mona_Sans as FontSans } from "next/font/google"
+
+// Get the fontSans variable from the layout
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+})
 
 export default function NotificationsProvider() {
   const dispatch = useDispatch<AppDispatch>()
@@ -65,7 +72,7 @@ export default function NotificationsProvider() {
 
     toast.custom(
       (t) => (
-        <div className="custom-toast-wrapper">
+        <div className="custom-toast-wrapper font-sans">
           <div className="custom-toast-icon-container weather">
             <AlertTriangle className="custom-toast-icon" />
           </div>
@@ -101,7 +108,7 @@ export default function NotificationsProvider() {
 
           toast.custom(
             (t) => (
-              <div className="custom-toast-wrapper">
+              <div className="custom-toast-wrapper font-sans">
                 <div className="custom-toast-icon-container price">
                   <TrendingUp className="custom-toast-icon" />
                 </div>

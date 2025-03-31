@@ -1,7 +1,7 @@
 import type { WeatherData, WeatherDetail } from "@/lib/types"
 
 // Cities for the weather dashboard
-const cities = ["London", "New York", "Tokyo", "Paris", "Sydney", "Kolkata", "Chennai"]
+const cities = ["London", "New York", "Tokyo", "Bangalore", "Kolkata", "Chennai"]
 
 // Generate random weather history
 function generateWeatherHistory(city: string) {

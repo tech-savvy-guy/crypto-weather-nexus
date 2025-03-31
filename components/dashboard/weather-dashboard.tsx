@@ -20,7 +20,7 @@ export default function WeatherDashboard() {
     // Refresh data every 5 minutes
     const interval = setInterval(() => {
       dispatch(fetchWeatherData())
-    }, 300000)
+    }, 5 * 60 * 1000)
 
     return () => clearInterval(interval)
   }, [dispatch])
@@ -204,7 +204,7 @@ function WeatherCard({ city, isFavorite, onToggleFavorite }: WeatherCardProps) {
             </div>
           </div>
 
-          <Button asChild variant="outline" className="w-full mt-2 group">
+          <Button asChild variant="secondary" className="w-full mt-2 group">
             <a
               href={`https://wttr.in/${encodeURIComponent(city.city)}`}
               target="_blank"
