@@ -177,7 +177,7 @@ function CryptoCard({ crypto, isFavorite, onToggleFavorite }: CryptoCardProps) {
           </div>
 
           <Button asChild variant="outline" className="w-full mt-2 group">
-            <Link href={`/crypto/${crypto.id}`} className="flex items-center justify-center">
+            <Link target="_blank" href={`https://coinmarketcap.com/currencies/${crypto.id}`} className="flex items-center justify-center">
               View Details
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>

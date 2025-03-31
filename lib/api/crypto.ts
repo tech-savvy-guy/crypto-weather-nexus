@@ -11,7 +11,7 @@ const API_BASE_URL = "https://api.coingecko.com/api/v3"
 
 // Helper function to format API URL with key
 const formatApiUrl = (endpoint: string) => {
-  return `${API_BASE_URL}${endpoint}?x-cg-pro-api-key=${API_KEY}`
+  return `${API_BASE_URL}${endpoint}?x_cg_pro_api_key=${API_KEY}`
 }
 
 // Fetch crypto data from CoinGecko API
@@ -19,7 +19,7 @@ export async function fetchCryptoData(): Promise<CryptoData[]> {
   try {
     // Check if API key is available
     if (!API_KEY) {
-      console.error("CoinGecko API key is not configured!")
+      console.error("CoinGecko API key is not configured")
       return generateCryptoData() // Fallback to mock data
     }
 
@@ -75,12 +75,25 @@ export async function getCryptoDetails(id: string): Promise<CryptoDetail> {
 
     const data = await response.json()
 
-    // Extract price history from market data
-    const priceHistory: PriceHistoryEntry[] = []
+    // Fetch price history data from the market_chart endpoint
+    const historyResponse = await fetch(
+      formatApiUrl(`/coins/${id}/market_chart?vs_currency=usd&days=30&interval=daily`),
+    )
 
-    // Since CoinGecko doesn't provide historical data in this endpoint,
-    // we'll fetch it separately or use mock data for now
-    const mockPriceHistory = generatePriceHistory(data.market_data.current_price.usd)
+    if (!historyResponse.ok) {
+      throw new Error(`Failed to fetch price history: ${historyResponse.status}`)
+    }
+
+    const historyData = await historyResponse.json()
+
+    // Convert price history data to our format
+    const priceHistory: PriceHistoryEntry[] = historyData.prices.map((item: [number, number]) => {
+      const [timestamp, price] = item
+      return {
+        date: new Date(timestamp).toISOString().split("T")[0], // Format as YYYY-MM-DD
+        price: price,
+      }
+    })
 
     // Generate metrics from available data
     const metrics: CryptoMetric[] = [
@@ -129,7 +142,7 @@ export async function getCryptoDetails(id: string): Promise<CryptoDetail> {
       allTimeHigh: data.market_data.ath.usd || 0,
       description:
         data.description?.en?.split(". ").slice(0, 3).join(". ") + "." || `${data.name} is a cryptocurrency.`,
-      priceHistory: mockPriceHistory,
+      priceHistory: priceHistory,
       metrics: metrics,
     }
   } catch (error) {

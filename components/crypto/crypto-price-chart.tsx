@@ -20,7 +20,10 @@ interface CryptoPriceChartProps {
 export default function CryptoPriceChart({ priceHistory }: CryptoPriceChartProps) {
   const [hoveredPoint, setHoveredPoint] = useState<PriceHistoryEntry | null>(null)
 
-  const data = priceHistory.map((entry) => ({
+  // Sort data by date to ensure chronological order
+  const sortedData = [...priceHistory].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+
+  const data = sortedData.map((entry) => ({
     date: new Date(entry.date),
     price: entry.price,
   }))
